@@ -372,17 +372,9 @@
                 }
             }
             .chats::-webkit-scrollbar {
-                width: 3px;
-                height: 0px;
+                display: none;
               }
-            .chats::-webkit-scrollbar-track {
-                border-radius: 10px;
-              }
-              .chats::-webkit-scrollbar-thumb {
-                background: darkgray; 
-                border-radius: 10px;
-              }
-                
+            
         }
 
         .chat{
@@ -538,7 +530,15 @@
             }
 
             .messages::-webkit-scrollbar {
-                display: none;
+                width: 5px;
+                height: 0px;
+              }
+            .messages::-webkit-scrollbar-track {
+                border-radius: 10px;
+              }
+              .messages::-webkit-scrollbar-thumb {
+                background: darkgray; 
+                border-radius: 10px;
               }
 
             .input{

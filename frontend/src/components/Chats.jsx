@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import UserChat from './UserChat';
 import incoming from '../sounds/incoming.mp3';
 import outgoing from '../sounds/outgoing.mp3';
+import {BASE_URL} from "../portFile";
 
 const Chats = ({socket}) => {
   const [conversations, setConversations] = useState([]);
@@ -94,7 +95,7 @@ const Chats = ({socket}) => {
     //--------------UseEffect Socket function End-------------------------------
 
     const getConv = async () => {
-      let response = await fetch(`http://localhost:8800/api/conversation/${currentUser.uid}`, {
+      let response = await fetch(`${BASE_URL}/api/conversation/${currentUser.uid}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

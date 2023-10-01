@@ -1,5 +1,4 @@
 import React, { Suspense, lazy, useContext, useEffect, useRef, useState } from 'react'
-import Message from "./Message";
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -9,7 +8,7 @@ import Attach from "../images/attachment.png";
 import AddImg from "../images/add-image.png";
 import send from "../images/send.png";
 import {io} from "socket.io-client";
-//import ChatMessages from './ChatMessages';
+import {BASE_URL} from "../portFile";
 import imageCompression from 'browser-image-compression';
 const ChatMessages=lazy(()=> import ('./ChatMessages'));
 
@@ -55,7 +54,7 @@ const Messages = ({socket}) => {
   useEffect(()=>{
     const getMessages=async ()=>{
       try{
-        let result=await fetch(`http://localhost:8800/api/message/${data.conversationId}`);
+        let result=await fetch(`${BASE_URL}/api/message/${data.conversationId}`);
         result=await result.json();
         setMessages(result);
       }
@@ -70,7 +69,7 @@ const Messages = ({socket}) => {
   useEffect(()=>{
     const saveDB=async()=>{
       try{
-        let result=await fetch(`http://localhost:8800/api/message/`,{
+        let result=await fetch(`${BASE_URL}/api/message/`,{
           method:"POST",
           body: JSON.stringify(message),
           headers: {
@@ -84,7 +83,7 @@ const Messages = ({socket}) => {
           return;
         }
 
-        let result2=await fetch(`http://localhost:8800/api/conversation/updateText/${data.conversationId}`,{
+        let result2=await fetch(`${BASE_URL}/api/conversation/updateText/${data.conversationId}`,{
           method:"PUT",
           body: JSON.stringify({text: text==="" && img? "@Photo":text}),
           headers: {

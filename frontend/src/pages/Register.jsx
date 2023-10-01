@@ -7,6 +7,7 @@ import { storage, auth } from "../firebase";
 import { useNavigate, Link } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import logo from '../images/meetme2.png';
+import {BASE_URL} from "../portFile";
 
 const Register = () => {
 
@@ -27,7 +28,7 @@ const Register = () => {
   useEffect(()=>{
 
     const saveDB = async () => {
-      let response = await fetch("http://localhost:8800/api/auth/register", {
+      let response = await fetch(`${BASE_URL}/api/auth/register`, {
         method: "POST",
         body: JSON.stringify({ name, email, picURL, firebaseID }),
         headers: {

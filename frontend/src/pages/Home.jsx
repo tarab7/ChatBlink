@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useRef } from 'react'
 import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
 import { AuthContext } from '../context/AuthContext';
-//import {SocketContext} from '../context/SocketContext';
 import { io } from 'socket.io-client';
 
 const Home = () => {
@@ -11,7 +10,7 @@ const Home = () => {
   const socket=useRef();
 
   useEffect(()=>{
-    socket.current=io("ws://localhost:8900");
+    socket.current=io("https://chatblink-backend.onrender.com");
   },[])
 
   useEffect(()=>{

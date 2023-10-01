@@ -3,6 +3,7 @@ import { ChatContext } from '../context/ChatContext';
 import { useContext } from 'react';
 import incoming from '../sounds/incoming.mp3';
 import outgoing from '../sounds/outgoing.mp3';
+import {BASE_URL} from "../portFile";
 
 const UserChat = (props) => {
     //console.log("---------------Inside User Chat--------------")
@@ -49,7 +50,7 @@ const UserChat = (props) => {
             
         const getUser = async () => {
             
-            let response = await fetch(`http://localhost:8800/api/user/getUserById/${friendId}`, {
+            let response = await fetch(`${BASE_URL}/api/user/getUserById/${friendId}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

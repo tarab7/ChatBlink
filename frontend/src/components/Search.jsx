@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { auth } from "../firebase";
 import { ChatContext } from '../context/ChatContext';
 import removeImg from "../images/cross.png";
+import {BASE_URL} from "../portFile";
 
 const Search = () => {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ const Search = () => {
 
   const handleSearch = async () => {
     setSearching(true);
-    let response = await fetch(`http://localhost:8800/api/user/${username}`, {
+    let response = await fetch(`${BASE_URL}/api/user/${username}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +41,7 @@ const Search = () => {
 
     const userid=userItem.firebaseId;
     //FIND IF THEIR CONVO ALREADY EXISTS
-    let response = await fetch(`http://localhost:8800/api/conversation/${currentUser.uid}/${userid}`, {
+    let response = await fetch(`${BASE_URL}/api/conversation/${currentUser.uid}/${userid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +63,7 @@ const Search = () => {
 
       //IF CONVO NOT FOUND MAKE IT
     const conv={"senderId":currentUser.uid, "receiverId":userid}
-    let response2 = await fetch(`http://localhost:8800/api/conversation`, {
+    let response2 = await fetch(`${BASE_URL}/api/conversation`, {
       method: "POST",
       body:JSON.stringify(conv),
       headers: {
