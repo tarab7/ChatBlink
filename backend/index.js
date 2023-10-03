@@ -36,7 +36,7 @@ const server=app.listen(8800, console.log("Backend Server is running..."));
 
 const io=require("socket.io")(server,{
     cors:{
-        origin:"*",
+        origin:"https://chatblink.netlify.app/",
     },
 });
 
