@@ -16,8 +16,10 @@ const Home = () => {
   useEffect(()=>{
     if(!socket)
       return;
-    socket.current.emit("sendUser", currentUser.uid);
-    socket.current.emit("getOnline", currentUser.uid);
+    socket.current.on('connect', ()=>{
+      socket.current.emit("sendUser", currentUser.uid);
+      socket.current.emit("getOnline", currentUser.uid);
+    })
   },[currentUser])
 
   return (

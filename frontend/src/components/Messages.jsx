@@ -7,7 +7,6 @@ import removeImg from "../images/x-button.png";
 import Attach from "../images/attachment.png";
 import AddImg from "../images/add-image.png";
 import send from "../images/send.png";
-import {io} from "socket.io-client";
 import {BASE_URL} from "../portFile";
 import imageCompression from 'browser-image-compression';
 const ChatMessages=lazy(()=> import ('./ChatMessages'));
@@ -67,6 +66,7 @@ const Messages = ({socket}) => {
 
   
   useEffect(()=>{
+
     const saveDB=async()=>{
       try{
         let result=await fetch(`${BASE_URL}/api/message/`,{
@@ -100,6 +100,17 @@ const Messages = ({socket}) => {
       }
     }
     if(message){
+
+    //------------Socket Io sending Message-------------------------
+    socket.current && socket.current.emit("sendMessage",{
+      senderId:message.sender, 
+      receiverId: data.user.firebaseId,
+      text:message.text,
+      img:message.img,
+      conversationId: message.conversationId
+    })
+    //--------------------------------------------------------------
+
       saveDB();
     }
   },[message]);
@@ -116,15 +127,6 @@ const Messages = ({socket}) => {
       alert("ChatBlink only supports sending Image files only.");
       return;
     }
-    //------------Socket Io sending Message-------------------------
-    socket.current && socket.current.emit("sendMessage",{
-      senderId:currentUser.uid, 
-      receiverId: data.user.firebaseId,
-      text:text,
-      img:img,
-      conversationId: data.conversationId
-    })
-    //--------------------------------------------------------------
 
     if(img){
 

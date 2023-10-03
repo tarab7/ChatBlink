@@ -3,14 +3,17 @@ import {auth} from "../firebase";
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { ChatContext } from '../context/ChatContext';
 import logo from '../images/meetme.png';
 
 const Navbar = ({socket}) => {
   const { currentUser } = useContext(AuthContext);
-  const uid=currentUser.uid;
+  const {dispatch}=useContext(ChatContext);
   const navigate=useNavigate();
+
   const handleLogout=async()=>{
     try{
+      dispatch({"type":"CHANGE_USER", payload:{}, payload2:"null"});
       await signOut(auth);
       socket.current && socket.current.disconnect();
       navigate("/login");

@@ -7,6 +7,7 @@ import outgoing from '../sounds/outgoing.mp3';
 import {BASE_URL} from "../portFile";
 
 const Chats = ({socket}) => {
+
   const [conversations, setConversations] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
@@ -44,14 +45,13 @@ const Chats = ({socket}) => {
     setConversations((prev)=> [prev[index], ...prev.slice(0, index), ...prev.slice(index+1)]);
   },[oldConv])
 
-  //---------------socket io till here----------------------------------------
 
-  useEffect(() => {
-
-
+  useEffect(()=>{
     //--------------UseEffect Socket function----------------------------------
+
     socket.current && socket.current.on("getMessage",(d)=>{
       //Agr New conversation start kri hai then usko apne sidebar Chats me bi add krna pdega (Here sender is Other person)
+
       if(inc){
         const promise = inc.play();
         if(promise !== undefined){
@@ -74,6 +74,7 @@ const Chats = ({socket}) => {
 
   socket.current && socket.current.on("getMyMessage",(d)=>{
     //Agr New conversation start kri hai then usko apne sidebar Chats me bi add krna pdega (Here sender is Me)
+
     if(out){
       const promise = out.play();
       if(promise !== undefined){
@@ -84,6 +85,7 @@ const Chats = ({socket}) => {
           });
       }
     }
+    
       setNewConv({
         _id:d.conversationId,
         members:[currentUser.uid, d.receiverId],
@@ -92,7 +94,11 @@ const Chats = ({socket}) => {
         updatedAt: Date.now()
       })
     });
-    //--------------UseEffect Socket function End-------------------------------
+  },[socket.current]);
+
+  //---------------socket io till here----------------------------------------
+
+  useEffect(() => {
 
     const getConv = async () => {
       let response = await fetch(`${BASE_URL}/api/conversation/${currentUser.uid}`, {
